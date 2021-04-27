@@ -1,0 +1,9 @@
+thakralone:
+  hosts:
+      devops1:
+        ansible_connection: ssh
+        ansible_host: localhost
+        ansible_port: 22
+        ansible_user: root
+        # ansible_password: "<PASS VAR>"
+        ansible_ssh_private_key_file: "~/.ssh/id_rsa"

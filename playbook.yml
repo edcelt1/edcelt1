@@ -1,0 +1,53 @@
+- hosts: 172.29.175.199
+  vars:
+    appName: demo-ansible-awx
+    directoryPath: /tmp/edcel-ansible-directory
+  tasks:
+    - name: Creates Directory
+      file: 
+        path: "{{ item.dest }}"
+        state: directory
+        mode: "{{ item.mode }}"
+        recurse: yes
+        owner: edcelvista
+        group: edcelvista
+      with_items:
+        - { dest: "{{ directoryPath }}", mode: '0777' }
+
+    - copy: 
+        content: "Hello World!" 
+        dest: "{{ item.dest }}/{{ item.filename }}"
+        mode: "{{ item.mode }}"
+        backup: yes
+        owner: devops
+        group: devops
+      with_items:
+        - { dest: "{{ directoryPath }}", mode: '0777', filename: 'time.log' }
+
+    # - name: Feeds PID Check Counter 00
+    #   shell: |
+    #     pidcounter=$(ps -ef | grep docker | wc | awk '{print $1}')
+    #     echo $pidcounter
+    #     if [ $pidcounter -eq "29" ];
+    #     then
+    #       echo "Feeds confirmed alive"
+    #     else
+    #       echo "Feeds NOT alive"
+    #     fi
+    #   register: rebugOutput
+    # - debug: var=rebugOutput.stdout_lines
+
+    # - name: Multiline Commands
+    #   shell: |
+    #     whoami
+    #     id
+    #     pwd
+    #   register: out
+    # - debug: var=out.stdout_lines
+
+    # - name: Create Demo File
+    #   shell: |
+    #     echo "Hi from Ansible APP named {{ appName }}" > {{ appName }}.log
+    #   register: out
+    # - debug: var=out.stdout_lines
+
